@@ -71,10 +71,17 @@ export default function StrudelDemo() {
     
     const handlePlay = () => {
         globalEditor.evaluate()
+        console.log(globalEditor)
     }
 
     const handleStop = () => {
         globalEditor.stop()
+    }
+
+    const handleToggle = () => {
+        globalEditor.toggle()
+        /*globalEditor.setFontSize(5)*/
+
     }
 
     const [songText, setSongText] = useState(stranger_tune)
@@ -112,7 +119,7 @@ useEffect(() => {
                 },
             });
             
-        document.getElementById('proc').value = stranger_tune
+       // document.getElementById('proc').value = stranger_tune
         //SetupButtons()
         //Proc()
     }
@@ -121,37 +128,51 @@ useEffect(() => {
 
 
 return (
-    <div>
-        <h2>Strudel Demo</h2>
+    <div style={{ backgroundColor:'#EDEDED' }}>
+        <h1 className="text-center shadow-lg">Strudel Demo</h1>
+        <br/>
         <main>
 
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <PreprocessTextArea defaultValue={songText} onChange={(i) => setSongText(i.target.value)} />
+                    {/*<div className="col-md-4" style={{ maxHeight: '80vh', overflowY: 'auto' }}>*/}
+                    {/*    <PreprocessTextArea defaultValue={songText} onChange={(i) => setSongText(i.target.value)} />*/}
+                    {/*</div>*/}
+                    {/*<div className="col-md-6 overflow-hidden">*/}
+                    <div className="col-6 p-1 mx-auto shadow-lg" style={{ maxHeight: '91vh', overflowY: 'auto', backgroundColor: '#222222', borderStyle: 'solid', borderRadius: '15px',  opacity: 0.90 }}>
+                        <div id="editor" />
                     </div>
-                    <div className="col-md-4">
-
-                        <nav>
-                            <ProcessButtons />
-                            <br />
-                            <PlayButtons onPlay={handlePlay} onStop={handleStop} />
-                        </nav>
+                    <div className="col-5 mx-auto pe-5" >
+                        <div className="p-4" style={{ backgroundColor: 'white', borderRadius: '15px' }}>
+                            <nav>
+                                <ProcessButtons />
+                                <br />
+                                <PlayButtons onPlay={handlePlay} onStop={handleStop} onToggle={handleToggle} />
+                                <br />
+                                <br />
+                                <PreprocessControls />        
+                                <br />
+                            </nav>
+                        </div>
+                        <br/>
+                        <div className="p-4" style={{ backgroundColor: 'white', borderRadius: '15px'} }>
+                            <PreprocessTextArea defaultValue={songText} onChange={(i) => setSongText(i.target.value)} />
+                        </div>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <div id="editor" />
-                        <div id="output" />
-                    </div>
-                    <div className="col-md-4">
-                        <PreprocessControls />         
-                    </div>
+                    {/*<div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>*/}
+                    {/*    <div id="editor" />*/}
+                    {/*    <div id="output" />*/}
+                    {/*</div>*/}
+                    {/*<div className="col-md-4">*/}
+                    {/*    <PreprocessControls />         */}
+                    {/*</div>*/}
                 </div>
             </div>
             <canvas id="roll"></canvas>
         </main >
-    </div >
+    </div>
 );
 
 

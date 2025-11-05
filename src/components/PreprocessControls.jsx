@@ -1,33 +1,33 @@
 function PreprocessControls() {
     return (
     <>
-    <div className="input-group mb-3">
-            <span className="input-group-text" id="cpmControl">Set CPM Value</span>
-                <input type="text" className="form-control" placeholder="30" aria-label="cpm control form" aria-describedby="cpmControl" id="cpm_input_field" />
+        <div className="input-group mb-3">
+        <span className="input-group-text" id="cpmControl">Set CPM Value</span>
+            <input type="text" className="form-control" placeholder="30" aria-label="cpm control form" aria-describedby="cpmControl" id="cpm_input_field" />
 
-            </div>
+        </div>
 
-            <label htmlFor="volume_range" className="form-label">Volume Control</label>
-            <input type="range" className="form-range" min="0" max="1" step="0.001" id="volume_range" />
+        <label htmlFor="volume_range" className="form-label">Volume Control</label>
+        <input type="range" className="form-range" min="0" max="1" step="0.001" id="volume_range" />
 
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="s1"/>
-                <label className="form-check-label" htmlFor="s1">
-                        s1
-                    </label>
-            </div>
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="d1"/>
-                <label className="form-check-label" htmlFor="d1">
-                        d1
-                    </label>
-            </div>
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="d2"/>
-                <label className="form-check-label" htmlFor="d2">
-                    d2
+        <div className="form-check">
+            <input className="form-check-input" type="checkbox" value="" id="s1"/>
+            <label className="form-check-label" htmlFor="s1">
+                    s1
                 </label>
-            </div>
+        </div>
+        <div className="form-check">
+            <input className="form-check-input" type="checkbox" value="" id="d1"/>
+            <label className="form-check-label" htmlFor="d1">
+                    d1
+                </label>
+        </div>
+        <div className="form-check">
+            <input className="form-check-input" type="checkbox" value="" id="d2"/>
+            <label className="form-check-label" htmlFor="d2">
+                d2
+            </label>
+        </div>
     </>
   );
 }
