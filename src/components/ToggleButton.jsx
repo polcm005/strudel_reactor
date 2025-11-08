@@ -1,8 +1,9 @@
-function ToggleButton({onToggle}) {
+// This component holds the the toggle button and its conditional logic depending on the isMusicPLaying state variable
+function ToggleButton({ onToggle, musicStatus }) {
     return (
         <>
-            <div className="btn">
-                <button id="play" type="button" className="btn btn-primary" onClick={onToggle}>Toggle Play/Stop</button>
+            <div className="d-grid mt-2 mb-2">
+                <button type="button" className={musicStatus ? "btn btn-danger" : "btn btn-primary"} onClick={onToggle}>{musicStatus ? "Stop Music" : "Play Music"}</button>
             </div>
         </>
     );

@@ -1,28 +1,10 @@
+// This component to set the cycles per second
 function PreprocessControls() {
     return (
     <>
-        <div className="input-group mb-3">
-        <span className="input-group-text" id="cpmControl">Set CPM Value</span>
+        <div className="input-group mb-4">
+                <span className="input-group-text" id="cpmControl"><b>Set CPM</b></span>
             <input type="text" className="form-control" placeholder="30" aria-label="cpm control form" aria-describedby="cpmControl" id="cpm_input_field" />
-        </div>
-
-        <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="" id="s1"/>
-            <label className="form-check-label" htmlFor="s1">
-                    s1
-                </label>
-        </div>
-        <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="" id="d1"/>
-            <label className="form-check-label" htmlFor="d1">
-                    d1
-                </label>
-        </div>
-        <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="" id="d2"/>
-            <label className="form-check-label" htmlFor="d2">
-                d2
-            </label>
         </div>
     </>
   );

@@ -16,6 +16,10 @@ import PreprocessTextArea from './components/PreprocessTextArea';
 import StopButton from './components/StopButton';
 import ToggleButton from './components/ToggleButton';
 import TextSizeControl from './components/TextSizeControl';
+import InstrumentToggle from './components/InstrumentToggle';
+import EffectSelection from './components/EffectSelection';
+import FileUpload from './components/FileUpload';
+import VolumeControls from './components/VolumeControls';
 
 let globalEditor = null;
 
@@ -23,80 +27,25 @@ const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
-//export function SetupButtons() {
-
-//    document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-//    document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-//    document.getElementById('process').addEventListener('click', () => {
-//        Proc()
-//    }
-//    )
-//    document.getElementById('process_play').addEventListener('click', () => {
-//        if (globalEditor != null) {
-//            Proc()
-//            globalEditor.evaluate()
-//        }
-//    }
-//    )
-//}
-
-
-
-//export function ProcAndPlay() {
-//    if (globalEditor != null && globalEditor.repl.state.started == true) {
-//        console.log(globalEditor)
-//        Proc()
-//        globalEditor.evaluate();
-//    }
-//}
-
-//export function Proc() {
-
-//    let proc_text = document.getElementById('proc').value
-//    let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-//    ProcessText(proc_text);
-//    globalEditor.setCode(proc_text_replaced)
-//}
-
-//export function ProcessText(match, ...args) {
-
-//    let replace = ""
-//    if (document.getElementById('flexRadioDefault2').checked) {
-//        replace = "_"
-//    }
-
-//    return replace
-//}
-
 export default function StrudelDemo() {
 
     const hasRun = useRef(false);
     
-    //const handlePlay = () => {
-    //    globalEditor.evaluate();
-    //    console.log(globalEditor)
-    //    setIsMusicPlaying(true)
-    //}
-
-    //const handleStop = () => {
-    //    globalEditor.stop();
-    //    setIsMusicPlaying(false)
-    //}
-
     const handleToggle = () => {
-        globalEditor.toggle()
+        globalEditor.toggle() // When called, this method either stops or starts the music, depending on whether it is currently playing
+        if (isMusicPlaying == false) { setIsMusicPlaying(true) }; // if the music was not playing prior (i.e. false), change the isMusicPlaying state variable to true
+        if (isMusicPlaying == true) { setIsMusicPlaying(false) }; // if the music was playing prior (i.e. true), change the isMusicPlaying state variable to false
     }
 
-    const handleTextSize = (i) => {
-        setTextSize(i.target.value);
-        
+    function ProcessUserInput() {
+        let text_to_process = songText.value
     }
 
-    const [songText, setSongText] = useState(stranger_tune)
+    const [songText, setSongText] = useState(stranger_tune) // This state variable holds the current user input entered in the PreprocessTextArea component
 
-    const [fontSize, setTextSize] = useState(18)
+    const [fontSize, setTextSize] = useState(18) // This state variable holds the text size of the Strudel player contents
 
-    const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+    const [isMusicPlaying, setIsMusicPlaying] = useState(false); // This state variable indicates whether the music is currently playing or stopped
 
 useEffect(() => {
 
@@ -130,61 +79,52 @@ useEffect(() => {
                     await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
                 },
             });
-            
-       // document.getElementById('proc').value = stranger_tune
-        //SetupButtons()
-        //Proc()
     }
-    globalEditor.setCode(songText);
-    globalEditor.setFontSize(fontSize);
-}, [songText, fontSize]);
 
-
+    globalEditor.setCode(songText); 
+    globalEditor.setFontSize(fontSize); 
+}, [songText, fontSize]); // useEffect runs when the application beins, and whenever songText or fontSize change in value
 return (
-    /*<div style={{ backgroundColor: '#EDEDED' }}>*/
     <div>
         <h1 className="text-center shadow-lg text" style={{opacity:0.75, backgroundColor:'white'} }>Strudel Demo</h1>
         <br/>
         <main>
-
             <div className="container-fluid">
                 <div className="row">
-                    {/*<div className="col-md-4" style={{ maxHeight: '80vh', overflowY: 'auto' }}>*/}
-                    {/*    <PreprocessTextArea defaultValue={songText} onChange={(i) => setSongText(i.target.value)} />*/}
-                    {/*</div>*/}
-                    {/*<div className="col-md-6 overflow-hidden">*/}
-                    <div className="col-6 p-1 mx-auto shadow-lg " style={{ maxHeight: '91vh', overflowY: 'auto', backgroundColor: '#222222', borderStyle: 'solid', borderRadius: '15px', borderColor:'#fffb96', borderWidth:'3px' }}>
+                    {/*Column 1 containing Strudel Player*/}
+                    <div className="col-6 p-1 mx-auto shadow-lg " style={{ maxHeight: '91vh', overflowY: 'auto', backgroundColor: '#222222', borderStyle: 'solid', borderRadius: '15px', borderColor: '#fffb96', borderWidth: '3px' }}>
                         <div id="editor" />
                     </div>
+                    {/*Column 2 containing interface components and textbox*/}
                     <div className="col-5 mx-auto pe-5" >
-                        <div className="p-4" style={{ backgroundColor: 'white', borderRadius: '15px', borderStyle: 'solid', borderColor:'#fffb96', borderWidth:'0px'  }}>
+                        <div className="p-4 mb-4" style={{ backgroundColor: 'white', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' }}>
+                            <div>
+                                <p><b>Interface Controls</b></p>
+                            </div>
                             <nav>
                                 <ProcessButtons />
-                                <br />
-                                <ToggleButton onToggle={handleToggle} />
-                                {/*<PlayButtons onPlay={handlePlay} />*/}
-                                {/*<StopButton onStop={handleStop} />*/}
-                                <br />
-                                <br />
-                                <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} />
-                                {/*<PreprocessControls />     */}   
-                                <br />
+                                <ToggleButton onToggle={handleToggle} musicStatus={isMusicPlaying} /> {/*Whenever the toggle button is clicked, setIsMusicPlaying() sets the value of isMusicPlaying useState variable*/}
+                                <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> {/*Whenever the text size value is adjusted, setTextSize() sets the value of fontSize useState variable*/}
+                                <div className="row">
+                                    <div className="col-3">
+                                        <PreprocessControls />
+                                    </div>
+                                    <div className="col-9">
+                                        <VolumeControls />
+                                    </div>
+                                </div>
+                                <InstrumentToggle />
+                                <EffectSelection />
+                                <FileUpload />
                             </nav>
                         </div>
-                        <br/>
                         <div className="p-4" style={{ backgroundColor: 'white', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' } }>
                             <PreprocessTextArea defaultValue={songText} onChange={(i) => setSongText(i.target.value)} />
                         </div>
                     </div>
                 </div>
                 <div className="row">
-                    {/*<div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>*/}
-                    {/*    <div id="editor" />*/}
                     {/*    <div id="output" />*/}
-                    {/*</div>*/}
-                    {/*<div className="col-md-4">*/}
-                    {/*    <PreprocessControls />         */}
-                    {/*</div>*/}
                 </div>
             </div>
             <canvas id="roll"></canvas>
