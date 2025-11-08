@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+    background: linear-gradient(120deg, #ff71ce 20%, #01cdfe);
+    /*background: linear-gradient(45deg, #ff71ce 20%, #01cdfe);*/
+}
+
+.text{
+   font-size:40px;
+   font-weight:600;
+}
+
+/*.border {
+    border-image: linear-gradient(120deg, fffb96, white);
+    border-style:solid;
+    border-radius:15px;
+    border-width:5px;
+}*/

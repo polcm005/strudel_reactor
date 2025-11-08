@@ -4,11 +4,7 @@ function PreprocessControls() {
         <div className="input-group mb-3">
         <span className="input-group-text" id="cpmControl">Set CPM Value</span>
             <input type="text" className="form-control" placeholder="30" aria-label="cpm control form" aria-describedby="cpmControl" id="cpm_input_field" />
-
         </div>
-
-        <label htmlFor="volume_range" className="form-label">Volume Control</label>
-        <input type="range" className="form-range" min="0" max="1" step="0.001" id="volume_range" />
 
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="s1"/>

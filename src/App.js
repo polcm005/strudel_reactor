@@ -13,6 +13,9 @@ import PreprocessControls from './components/PreprocessControls';
 import PlayButtons from './components/PlayButtons';
 import ProcessButtons from './components/ProcessButtons';
 import PreprocessTextArea from './components/PreprocessTextArea';
+import StopButton from './components/StopButton';
+import ToggleButton from './components/ToggleButton';
+import TextSizeControl from './components/TextSizeControl';
 
 let globalEditor = null;
 
@@ -69,22 +72,31 @@ export default function StrudelDemo() {
 
     const hasRun = useRef(false);
     
-    const handlePlay = () => {
-        globalEditor.evaluate()
-        console.log(globalEditor)
-    }
+    //const handlePlay = () => {
+    //    globalEditor.evaluate();
+    //    console.log(globalEditor)
+    //    setIsMusicPlaying(true)
+    //}
 
-    const handleStop = () => {
-        globalEditor.stop()
-    }
+    //const handleStop = () => {
+    //    globalEditor.stop();
+    //    setIsMusicPlaying(false)
+    //}
 
     const handleToggle = () => {
         globalEditor.toggle()
-        /*globalEditor.setFontSize(5)*/
+    }
 
+    const handleTextSize = (i) => {
+        setTextSize(i.target.value);
+        
     }
 
     const [songText, setSongText] = useState(stranger_tune)
+
+    const [fontSize, setTextSize] = useState(18)
+
+    const [isMusicPlaying, setIsMusicPlaying] = useState(false);
 
 useEffect(() => {
 
@@ -124,12 +136,14 @@ useEffect(() => {
         //Proc()
     }
     globalEditor.setCode(songText);
-}, [songText]);
+    globalEditor.setFontSize(fontSize);
+}, [songText, fontSize]);
 
 
 return (
-    <div style={{ backgroundColor:'#EDEDED' }}>
-        <h1 className="text-center shadow-lg">Strudel Demo</h1>
+    /*<div style={{ backgroundColor: '#EDEDED' }}>*/
+    <div>
+        <h1 className="text-center shadow-lg text" style={{opacity:0.75, backgroundColor:'white'} }>Strudel Demo</h1>
         <br/>
         <main>
 
@@ -139,23 +153,26 @@ return (
                     {/*    <PreprocessTextArea defaultValue={songText} onChange={(i) => setSongText(i.target.value)} />*/}
                     {/*</div>*/}
                     {/*<div className="col-md-6 overflow-hidden">*/}
-                    <div className="col-6 p-1 mx-auto shadow-lg" style={{ maxHeight: '91vh', overflowY: 'auto', backgroundColor: '#222222', borderStyle: 'solid', borderRadius: '15px',  opacity: 0.90 }}>
+                    <div className="col-6 p-1 mx-auto shadow-lg " style={{ maxHeight: '91vh', overflowY: 'auto', backgroundColor: '#222222', borderStyle: 'solid', borderRadius: '15px', borderColor:'#fffb96', borderWidth:'3px' }}>
                         <div id="editor" />
                     </div>
                     <div className="col-5 mx-auto pe-5" >
-                        <div className="p-4" style={{ backgroundColor: 'white', borderRadius: '15px' }}>
+                        <div className="p-4" style={{ backgroundColor: 'white', borderRadius: '15px', borderStyle: 'solid', borderColor:'#fffb96', borderWidth:'0px'  }}>
                             <nav>
                                 <ProcessButtons />
                                 <br />
-                                <PlayButtons onPlay={handlePlay} onStop={handleStop} onToggle={handleToggle} />
+                                <ToggleButton onToggle={handleToggle} />
+                                {/*<PlayButtons onPlay={handlePlay} />*/}
+                                {/*<StopButton onStop={handleStop} />*/}
                                 <br />
                                 <br />
-                                <PreprocessControls />        
+                                <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} />
+                                {/*<PreprocessControls />     */}   
                                 <br />
                             </nav>
                         </div>
                         <br/>
-                        <div className="p-4" style={{ backgroundColor: 'white', borderRadius: '15px'} }>
+                        <div className="p-4" style={{ backgroundColor: 'white', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' } }>
                             <PreprocessTextArea defaultValue={songText} onChange={(i) => setSongText(i.target.value)} />
                         </div>
                     </div>
