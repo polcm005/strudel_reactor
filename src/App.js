@@ -37,8 +37,11 @@ export default function StrudelDemo() {
         if (isMusicPlaying == true) { setIsMusicPlaying(false) }; // if the music was playing prior (i.e. true), change the isMusicPlaying state variable to false
     }
 
-    function ProcessUserInput() {
-        let text_to_process = songText.value
+    const handleUserInputProcessing = () => {
+        let text_to_process = songText;
+        const terms_to_replace = /<b1_toggle>|<d1_toggle>|<d2_toggle>/gi
+        let processed_text = text_to_process.replaceAll(terms_to_replace, '')
+        setSongText(processed_text);
     }
 
     const [songText, setSongText] = useState(stranger_tune) // This state variable holds the current user input entered in the PreprocessTextArea component
@@ -102,7 +105,7 @@ return (
                                 <p><b>Interface Controls</b></p>
                             </div>
                             <nav>
-                                <ProcessButtons />
+                                <ProcessButtons processingLogic={handleUserInputProcessing} />
                                 <ToggleButton onToggle={handleToggle} musicStatus={isMusicPlaying} /> {/*Whenever the toggle button is clicked, setIsMusicPlaying() sets the value of isMusicPlaying useState variable*/}
                                 <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> {/*Whenever the text size value is adjusted, setTextSize() sets the value of fontSize useState variable*/}
                                 <div className="row">
