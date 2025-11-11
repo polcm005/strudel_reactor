@@ -2,11 +2,11 @@
 function FileUpload() {
     return (
         <>
-        <div className="mb-2">
+        <div className="mb-2 pb-2">
         <p><b>JSON File Upload</b></p>
             <div className="input-group">
                 <input type="file" className="form-control" id="inputGroupFile010"/>
-                <label className="input-group-text" for="inputGroupFile01">Upload</label>
+                <label className="input-group-text" htmlFor="inputGroupFile01">Upload</label>
             </div>
         </div>
         </>

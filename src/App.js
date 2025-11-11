@@ -20,6 +20,7 @@ import InstrumentToggle from './components/InstrumentToggle';
 import EffectSelection from './components/EffectSelection';
 import FileUpload from './components/FileUpload';
 import VolumeControls from './components/VolumeControls';
+import SelectTheme from './components/SelectTheme';
 
 let globalEditor = null;
 
@@ -35,6 +36,7 @@ export default function StrudelDemo() {
         globalEditor.toggle() // When called, this method either stops or starts the music, depending on whether it is currently playing
         if (isMusicPlaying == false) { setIsMusicPlaying(true) }; // if the music was not playing prior (i.e. false), change the isMusicPlaying state variable to true
         if (isMusicPlaying == true) { setIsMusicPlaying(false) }; // if the music was playing prior (i.e. true), change the isMusicPlaying state variable to false
+        console.log(globalEditor);
     }
 
     const handleUserInputProcessing = () => {
@@ -42,6 +44,11 @@ export default function StrudelDemo() {
         const terms_to_replace = /<b1_toggle>|<d1_toggle>|<d2_toggle>/gi
         let processed_text = text_to_process.replaceAll(terms_to_replace, '')
         setSongText(processed_text);
+    }
+
+    const handleThemeChange = (themeName) => {
+        console.log("received theme" + themeName);
+        globalEditor.setTheme(themeName)
     }
 
     const [songText, setSongText] = useState(stranger_tune) // This state variable holds the current user input entered in the PreprocessTextArea component
@@ -119,6 +126,7 @@ return (
                                 <InstrumentToggle />
                                 <EffectSelection />
                                 <FileUpload />
+                                <SelectTheme onChange={(i) => handleThemeChange(i.target.value)} />
                             </nav>
                         </div>
                         <div className="p-4" style={{ backgroundColor: 'white', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' } }>
