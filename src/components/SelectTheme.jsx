@@ -28,8 +28,14 @@ function SelectTheme({onChange}) {
                 <option value="monokai">Monokai</option>
                 <option value="noctisLilac">NoctisLilac</option>
                 <option value="nord">Nord</option>
-                <option value="red-text">Red-text</option>
                 <option value="solarizedDark">SolarizedDark</option>
+                <option value="solarizedLight">SolarizedLight</option>
+                <option value="sonic-pink">Sonic-Pink0</option>0
+                <option value="sublime">Sublime</option>
+                <option value="teletext">Teletext</option>
+                <option value="tokyoNightStorm">TokyoNightStorm</option>
+                <option value="tokyoNight">tokyoNight</option>
+                <option value="tokyoNightDay">tokyoNightDay</option>
             </select>
         </>
     );

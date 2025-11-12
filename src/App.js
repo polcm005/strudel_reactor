@@ -21,6 +21,7 @@ import EffectSelection from './components/EffectSelection';
 import FileUpload from './components/FileUpload';
 import VolumeControls from './components/VolumeControls';
 import SelectTheme from './components/SelectTheme';
+import GraphArea from './components/GraphArea';
 
 let globalEditor = null;
 
@@ -45,6 +46,30 @@ export default function StrudelDemo() {
         let processed_text = text_to_process.replaceAll(terms_to_replace, '')
         setSongText(processed_text);
     }
+
+    const handleInstrumentDetection = () => {
+        let instrumentTerms = /bassline|main_arp|drums|drums2/gi
+    }
+
+    const handleBasslineDetection = () => {
+        /*let basslineTerm = /bassline/gi*/
+        let processed_text = songText.replaceAll('bassline', '_bassline')
+    }
+
+    //const handleMain_arpDetection = () => {
+    //    let main_arpTerm = /main_arp/gi
+
+    //}
+
+    //const handledrumsDetection = () => {
+    //    let drumsTerm = /drums/gi
+    //}
+
+    //const handleDrums2Detection = () => {
+    //    let drums2Term = /drums/gi
+    //}
+
+    
 
     const handleThemeChange = (themeName) => {
         console.log("received theme" + themeName);
@@ -127,6 +152,7 @@ return (
                                 <EffectSelection />
                                 <FileUpload />
                                 <SelectTheme onChange={(i) => handleThemeChange(i.target.value)} />
+                                <GraphArea/>
                             </nav>
                         </div>
                         <div className="p-4" style={{ backgroundColor: 'white', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' } }>
