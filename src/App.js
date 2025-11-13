@@ -69,6 +69,12 @@ export default function StrudelDemo() {
     //    let drums2Term = /drums/gi
     //}
 
+    const handleCPS = (newCPSValue) => {
+        console.log("handleCPS" + newCPSValue)
+        let cpsRegex = /setcps\(.*\)/gi
+        let processed_text = songText.replaceAll(cpsRegex, "setcps(" + newCPSValue + ")")
+        setSongText(processed_text)
+    }
     
 
     const handleThemeChange = (themeName) => {
@@ -81,6 +87,8 @@ export default function StrudelDemo() {
     const [fontSize, setTextSize] = useState(18) // This state variable holds the text size of the Strudel player contents
 
     const [isMusicPlaying, setIsMusicPlaying] = useState(false); // This state variable indicates whether the music is currently playing or stopped
+
+    const [cpsValue, setCPSValue] = useState();
 
 useEffect(() => {
 
@@ -141,10 +149,11 @@ return (
                                 <ToggleButton onToggle={handleToggle} musicStatus={isMusicPlaying} /> {/*Whenever the toggle button is clicked, setIsMusicPlaying() sets the value of isMusicPlaying useState variable*/}
                                 <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> {/*Whenever the text size value is adjusted, setTextSize() sets the value of fontSize useState variable*/}
                                 <div className="row">
-                                    <div className="col-3">
-                                        <PreprocessControls />
+                                    <div className="col-5">
+                                        <PreprocessControls onChange={(i) => setCPSValue(i.target.value)} />
+                                        
                                     </div>
-                                    <div className="col-9">
+                                    <div className="col-7">
                                         <VolumeControls />
                                     </div>
                                 </div>
