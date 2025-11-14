@@ -38,6 +38,17 @@ export default function StrudelDemo() {
         if (isMusicPlaying == false) { setIsMusicPlaying(true) }; // if the music was not playing prior (i.e. false), change the isMusicPlaying state variable to true
         if (isMusicPlaying == true) { setIsMusicPlaying(false) }; // if the music was playing prior (i.e. true), change the isMusicPlaying state variable to false
         console.log(globalEditor);
+        console.log("cpsvalue " + cpsValue);
+    }
+
+    const handlePlay = () => {
+        globalEditor.evaluate()
+        setIsMusicPlaying(true)
+    }
+
+    const handleStop = () => {
+        globalEditor.stop();
+        setIsMusicPlaying(false);
     }
 
     const handleUserInputProcessing = () => {
@@ -69,13 +80,22 @@ export default function StrudelDemo() {
     //    let drums2Term = /drums/gi
     //}
 
-    const handleCPS = (newCPSValue) => {
-        console.log("handleCPS" + newCPSValue)
+    const handleCPS = () => {
+        
+        console.log("handleCPS" + cpsValue)
         let cpsRegex = /setcps\(.*\)/gi
-        let processed_text = songText.replaceAll(cpsRegex, "setcps(" + newCPSValue + ")")
+        let processed_text = songText.replaceAll(cpsRegex, "setcps(" + cpsValue + ")")
         setSongText(processed_text)
-    }
+        console.log("pre-restart" + processed_text)
+        console.log("pre-restart" + songText)
+
     
+        //if (isMusicPlaying == true) {
+        //    globalEditor.stop();
+        //    globalEditor.evaluate();
+        //    console.log("post-restart" + songText)
+        //}
+    }
 
     const handleThemeChange = (themeName) => {
         console.log("received theme" + themeName);
@@ -125,7 +145,7 @@ useEffect(() => {
     }
 
     globalEditor.setCode(songText); 
-    globalEditor.setFontSize(fontSize); 
+    globalEditor.setFontSize(fontSize);
 }, [songText, fontSize]); // useEffect runs when the application beins, and whenever songText or fontSize change in value
 return (
     <div>
@@ -149,11 +169,11 @@ return (
                                 <ToggleButton onToggle={handleToggle} musicStatus={isMusicPlaying} /> {/*Whenever the toggle button is clicked, setIsMusicPlaying() sets the value of isMusicPlaying useState variable*/}
                                 <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> {/*Whenever the text size value is adjusted, setTextSize() sets the value of fontSize useState variable*/}
                                 <div className="row">
-                                    <div className="col-5">
-                                        <PreprocessControls onChange={(i) => setCPSValue(i.target.value)} />
+                                    <div className="col-6">
+                                        <PreprocessControls onChange={(i) => setCPSValue(i.target.value)} onClick={(i) => { handleCPS()}} />
                                         
                                     </div>
-                                    <div className="col-7">
+                                    <div className="col-6">
                                         <VolumeControls />
                                     </div>
                                 </div>
