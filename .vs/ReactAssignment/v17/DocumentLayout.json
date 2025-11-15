@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\cn842\\source\\repos\\web_technology_react_assignment\\strudel_reactor\\src\\components\\preprocesscontrols.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\preprocesscontrols.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\cn842\\source\\repos\\web_technology_react_assignment\\strudel_reactor\\src\\tunes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\tunes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\cn842\\source\\repos\\web_technology_react_assignment\\strudel_reactor\\src\\components\\textsizecontrol.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\textsizecontrol.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\cn842\\source\\repos\\web_technology_react_assignment\\strudel_reactor\\src\\components\\instrumenttoggle.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\instrumenttoggle.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,40 +22,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "tunes.js",
+              "DocumentMoniker": "C:\\Users\\cn842\\source\\repos\\Web_Technology_React_Assignment\\strudel_reactor\\src\\tunes.js",
+              "RelativeDocumentMoniker": "src\\tunes.js",
+              "ToolTip": "C:\\Users\\cn842\\source\\repos\\Web_Technology_React_Assignment\\strudel_reactor\\src\\tunes.js",
+              "RelativeToolTip": "src\\tunes.js",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAACkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-15T12:59:33.705Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "TextSizeControl.jsx",
-              "DocumentMoniker": "C:\\Users\\cn842\\source\\repos\\Web_Technology_React_Assignment\\strudel_reactor\\src\\components\\TextSizeControl.jsx",
-              "RelativeDocumentMoniker": "src\\components\\TextSizeControl.jsx",
-              "ToolTip": "C:\\Users\\cn842\\source\\repos\\Web_Technology_React_Assignment\\strudel_reactor\\src\\components\\TextSizeControl.jsx",
-              "RelativeToolTip": "src\\components\\TextSizeControl.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "InstrumentToggle.jsx",
+              "DocumentMoniker": "C:\\Users\\cn842\\source\\repos\\Web_Technology_React_Assignment\\strudel_reactor\\src\\components\\InstrumentToggle.jsx",
+              "RelativeDocumentMoniker": "src\\components\\InstrumentToggle.jsx",
+              "ToolTip": "C:\\Users\\cn842\\source\\repos\\Web_Technology_React_Assignment\\strudel_reactor\\src\\components\\InstrumentToggle.jsx",
+              "RelativeToolTip": "src\\components\\InstrumentToggle.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAB/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-11-13T12:33:17.692Z"
+              "WhenOpened": "2025-11-15T12:08:18.776Z",
+              "EditorCaption": ""
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "PreprocessControls.jsx",
-              "DocumentMoniker": "C:\\Users\\cn842\\source\\repos\\Web_Technology_React_Assignment\\strudel_reactor\\src\\components\\PreprocessControls.jsx",
-              "RelativeDocumentMoniker": "src\\components\\PreprocessControls.jsx",
-              "ToolTip": "C:\\Users\\cn842\\source\\repos\\Web_Technology_React_Assignment\\strudel_reactor\\src\\components\\PreprocessControls.jsx",
-              "RelativeToolTip": "src\\components\\PreprocessControls.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-11-13T11:48:50.234Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Document",
@@ -65,7 +62,7 @@
               "RelativeDocumentMoniker": "src\\App.js",
               "ToolTip": "C:\\Users\\cn842\\source\\repos\\Web_Technology_React_Assignment\\strudel_reactor\\src\\App.js",
               "RelativeToolTip": "src\\App.js",
-              "ViewState": "AgIAAI8AAAAAAAAAAAAgwFoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADsAAAAAAAAAAAAgwEEAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-11-01T04:15:00.28Z",
               "EditorCaption": ""

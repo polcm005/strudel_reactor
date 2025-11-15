@@ -62,9 +62,17 @@ export default function StrudelDemo() {
         let instrumentTerms = /bassline|main_arp|drums|drums2/gi
     }
 
-    const handleBasslineDetection = () => {
+    const handleBassline = () => {
+        console.log("bassline checked status is "+ basslineStatus)
         /*let basslineTerm = /bassline/gi*/
-        let processed_text = songText.replaceAll('bassline', '_bassline')
+        if (basslineStatus == true) {
+            let processed_text = songText.replaceAll('bassline:', '_bassline:');
+            setSongText(processed_text);
+            console.log("added underscore")
+        } else { let processed_text = songText.replaceAll('_bassline:', 'bassline:');
+            setSongText(processed_text);
+            console.log("removed underscore")
+        }
     }
 
     //const handleMain_arpDetection = () => {
@@ -103,6 +111,8 @@ export default function StrudelDemo() {
     const [isMusicPlaying, setIsMusicPlaying] = useState(false); // This state variable indicates whether the music is currently playing or stopped
 
     const [cpsValue, setCPSValue] = useState();
+
+    const [basslineStatus, setBasslineStatus] = useState(true);
 
 useEffect(() => {
 
@@ -176,7 +186,7 @@ return (
                                         <VolumeControls />
                                     </div>
                                 </div>
-                                <InstrumentToggle />
+                                <InstrumentToggle onChange={(i) => {setBasslineStatus(i.target.checked) ; handleBassline(); console.log("bassline clicked") }} />
                                 <EffectSelection />
                                 <FileUpload />
                                 <SelectTheme onChange={(i) => handleThemeChange(i.target.value)} />

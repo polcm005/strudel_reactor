@@ -39,7 +39,7 @@ const arpeggiator2 = [
 const pattern = 0
 const bass = 0
 
-<b1_toggle>bassline:
+bassline:
 note(pick(basslines, bass))
 .sound("supersaw")
 .postgain(2)
