@@ -29,7 +29,7 @@ function BasslineToggle({onChange}) {
             <div className="col-2">
                 <div className="form-check">
                         <input className="form-check-input" type="checkbox" value="" id="b" onChange={onChange} defaultChecked/>
-                    <label className="form-check-label" htmlFor="b">
+                    <label className="form-check-label">
                         Bassline
                     </label>
                 </div>

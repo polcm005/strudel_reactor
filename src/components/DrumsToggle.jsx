@@ -1,11 +1,11 @@
 // This component allows users to toggle the drums instrumentals
-function InstrumentToggle({ onChange }) {
+function DrumsToggle({ onChange }) {
     return (
         <>
             <div className="col-2">
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="b" onChange={onChange} defaultChecked />
-                    <label className="form-check-label" htmlFor="b">
+                    <input className="form-check-input" type="checkbox" value="" id="d" onChange={onChange} defaultChecked />
+                    <label className="form-check-label">
                         Drums
                     </label>
                 </div>
@@ -14,4 +14,4 @@ function InstrumentToggle({ onChange }) {
     );
 }
 
-export default InstrumentToggle;
+export default DrumsToggle;

@@ -23,6 +23,8 @@ import VolumeControls from './components/VolumeControls';
 import SelectTheme from './components/SelectTheme';
 import GraphArea from './components/GraphArea';
 import DrumsToggle from './components/DrumsToggle'
+import Drums2Toggle from './components/Drums2Toggle'
+import MainArpToggle from './components/MainArpToggle'
 
 let globalEditor = null;
 
@@ -38,8 +40,8 @@ export default function StrudelDemo() {
         globalEditor.toggle() // When called, this method either stops or starts the music, depending on whether it is currently playing
         if (isMusicPlaying == false) { setIsMusicPlaying(true) }; // if the music was not playing prior (i.e. false), change the isMusicPlaying state variable to true
         if (isMusicPlaying == true) { setIsMusicPlaying(false) }; // if the music was playing prior (i.e. true), change the isMusicPlaying state variable to false
-        console.log(globalEditor);
-        console.log("cpsvalue " + cpsValue);
+        /*console.log(globalEditor);*/
+        //console.log("cpsvalue " + cpsValue);
     }
 
     const handlePlay = () => {
@@ -82,6 +84,26 @@ export default function StrudelDemo() {
         }
     }
 
+    const handleDrums2 = () => {
+        if (drums2Status == true) {
+            let processed_text = songText.replaceAll('drums2:', '_drums2:');
+            setSongText(processed_text);
+        } else {
+            let processed_text = songText.replaceAll('_drums2:', 'drums2:');
+            setSongText(processed_text);
+        }
+    }
+
+    const handleMainArp = () => {
+        if (mainArpStatus == true) {
+            let processed_text = songText.replaceAll('main_arp:', '_main_arp:');
+            setSongText(processed_text);
+        } else {
+            let processed_text = songText.replaceAll('_main_arp:', 'main_arp:');
+            setSongText(processed_text);
+        }
+    }
+
     //const handleMain_arpDetection = () => {
     //    let main_arpTerm = /main_arp/gi
 
@@ -97,17 +119,17 @@ export default function StrudelDemo() {
 
     const handleCPS = () => {
         
-        console.log("handleCPS" + cpsValue)
+        /*console.log("handleCPS" + cpsValue)*/
         let cpsRegex = /setcps\(.*\)/gi
         let processed_text = songText.replaceAll(cpsRegex, "setcps(" + cpsValue + ")")
         setSongText(processed_text)
-        console.log("pre-restart" + processed_text)
-        console.log("pre-restart" + songText)
+        //console.log("pre-restart" + processed_text)
+        //console.log("pre-restart" + songText)
 
     }
 
     const handleThemeChange = (themeName) => {
-        console.log("received theme" + themeName);
+        /*console.log("received theme" + themeName);*/
         globalEditor.setTheme(themeName)
     }
 
@@ -122,6 +144,10 @@ export default function StrudelDemo() {
     const [basslineStatus, setBasslineStatus] = useState(true);
 
     const [drumsStatus, setDrumsStatus] = useState(true);
+
+    const [drums2Status, setDrums2Status] = useState(true);
+
+    const [mainArpStatus, setMainArpStatus] = useState(true);
 
 useEffect(() => {
 
@@ -183,7 +209,7 @@ return (
                                 <p><b>Interface Controls</b></p>
                             </div>
                             <nav>
-                                <ProcessButtons processingLogic={handleUserInputProcessing} />
+                                {/*<ProcessButtons processingLogic={handleUserInputProcessing} />*/}
                                 <ToggleButton onToggle={handleToggle} musicStatus={isMusicPlaying} /> {/*Whenever the toggle button is clicked, setIsMusicPlaying() sets the value of isMusicPlaying useState variable*/}
                                 <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> {/*Whenever the text size value is adjusted, setTextSize() sets the value of fontSize useState variable*/}
                                 <div className="row">
@@ -199,6 +225,8 @@ return (
                                 <div className="row mb-3">
                                     <BasslineToggle onChange={(i) => { setBasslineStatus(i.target.checked); handleBassline() }} />
                                     <DrumsToggle onChange={(i) => { setDrumsStatus(i.target.checked); handleDrums() }} />
+                                    <Drums2Toggle onChange={(i) => { setDrums2Status(i.target.checked); handleDrums2() }} />
+                                    <MainArpToggle onChange={(i) => { setMainArpStatus(i.target.checked); handleMainArp() }} />
                                 </div>
                                 <EffectSelection />
                                 <FileUpload />
