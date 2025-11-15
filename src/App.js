@@ -89,12 +89,6 @@ export default function StrudelDemo() {
         console.log("pre-restart" + processed_text)
         console.log("pre-restart" + songText)
 
-    
-        //if (isMusicPlaying == true) {
-        //    globalEditor.stop();
-        //    globalEditor.evaluate();
-        //    console.log("post-restart" + songText)
-        //}
     }
 
     const handleThemeChange = (themeName) => {
@@ -146,6 +140,11 @@ useEffect(() => {
 
     globalEditor.setCode(songText); 
     globalEditor.setFontSize(fontSize);
+
+    if (isMusicPlaying == true) {
+        globalEditor.evaluate();
+    }
+
 }, [songText, fontSize]); // useEffect runs when the application beins, and whenever songText or fontSize change in value
 return (
     <div>
