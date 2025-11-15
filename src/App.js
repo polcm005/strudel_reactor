@@ -16,12 +16,13 @@ import PreprocessTextArea from './components/PreprocessTextArea';
 import StopButton from './components/StopButton';
 import ToggleButton from './components/ToggleButton';
 import TextSizeControl from './components/TextSizeControl';
-import InstrumentToggle from './components/InstrumentToggle';
+import BasslineToggle from './components/BasslineToggle';
 import EffectSelection from './components/EffectSelection';
 import FileUpload from './components/FileUpload';
 import VolumeControls from './components/VolumeControls';
 import SelectTheme from './components/SelectTheme';
 import GraphArea from './components/GraphArea';
+import DrumsToggle from './components/DrumsToggle'
 
 let globalEditor = null;
 
@@ -63,15 +64,21 @@ export default function StrudelDemo() {
     }
 
     const handleBassline = () => {
-        console.log("bassline checked status is "+ basslineStatus)
-        /*let basslineTerm = /bassline/gi*/
         if (basslineStatus == true) {
             let processed_text = songText.replaceAll('bassline:', '_bassline:');
             setSongText(processed_text);
-            console.log("added underscore")
         } else { let processed_text = songText.replaceAll('_bassline:', 'bassline:');
             setSongText(processed_text);
-            console.log("removed underscore")
+        }
+    }
+
+    const handleDrums = () => {
+        if (drumsStatus == true) {
+            let processed_text = songText.replaceAll('drums:', '_drums:');
+            setSongText(processed_text);
+        } else {
+            let processed_text = songText.replaceAll('_drums:', 'drums:');
+            setSongText(processed_text);
         }
     }
 
@@ -113,6 +120,8 @@ export default function StrudelDemo() {
     const [cpsValue, setCPSValue] = useState();
 
     const [basslineStatus, setBasslineStatus] = useState(true);
+
+    const [drumsStatus, setDrumsStatus] = useState(true);
 
 useEffect(() => {
 
@@ -186,7 +195,11 @@ return (
                                         <VolumeControls />
                                     </div>
                                 </div>
-                                <InstrumentToggle onChange={(i) => {setBasslineStatus(i.target.checked) ; handleBassline(); console.log("bassline clicked") }} />
+                                <p><b>Toggle Instrumental Elements</b></p>
+                                <div className="row mb-3">
+                                    <BasslineToggle onChange={(i) => { setBasslineStatus(i.target.checked); handleBassline() }} />
+                                    <DrumsToggle onChange={(i) => { setDrumsStatus(i.target.checked); handleDrums() }} />
+                                </div>
                                 <EffectSelection />
                                 <FileUpload />
                                 <SelectTheme onChange={(i) => handleThemeChange(i.target.value)} />
