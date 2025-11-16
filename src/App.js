@@ -25,6 +25,7 @@ import GraphArea from './components/GraphArea';
 import DrumsToggle from './components/DrumsToggle'
 import Drums2Toggle from './components/Drums2Toggle'
 import MainArpToggle from './components/MainArpToggle'
+import PatternSetting from './components/PatternSetting'
 
 let globalEditor = null;
 
@@ -104,6 +105,12 @@ export default function StrudelDemo() {
         }
     }
 
+    const handlePattern = (newValue) => {
+        let patternRegex = /const pattern = .*/gi
+        let processed_text = songText.replaceAll(patternRegex, 'const pattern = ' + newValue);
+        setSongText(processed_text);
+    }
+
     //const handleMain_arpDetection = () => {
     //    let main_arpTerm = /main_arp/gi
 
@@ -148,6 +155,8 @@ export default function StrudelDemo() {
     const [drums2Status, setDrums2Status] = useState(true);
 
     const [mainArpStatus, setMainArpStatus] = useState(true);
+
+    const [patternStatus, setPatternStatus] = useState("0");
 
 useEffect(() => {
 
@@ -227,6 +236,9 @@ return (
                                     <DrumsToggle onChange={(i) => { setDrumsStatus(i.target.checked); handleDrums() }} />
                                     <Drums2Toggle onChange={(i) => { setDrums2Status(i.target.checked); handleDrums2() }} />
                                     <MainArpToggle onChange={(i) => { setMainArpStatus(i.target.checked); handleMainArp() }} />
+                                </div>
+                                <div className="row mb-3">
+                                    <PatternSetting onChange={(i) => { setPatternStatus(i.target.value); console.log("pattern status should now be " + i.target.value); handlePattern(i.target.value) }} />
                                 </div>
                                 <EffectSelection />
                                 <FileUpload />
