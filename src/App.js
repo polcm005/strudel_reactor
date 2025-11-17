@@ -9,7 +9,7 @@ import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/w
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
-import PreprocessControls from './components/PreprocessControls';
+import CPSControls from './components/CPSControls';
 import PlayButtons from './components/PlayButtons';
 import ProcessButtons from './components/ProcessButtons';
 import PreprocessTextArea from './components/PreprocessTextArea';
@@ -46,26 +46,26 @@ export default function StrudelDemo() {
         //console.log("cpsvalue " + cpsValue);
     }
 
-    const handlePlay = () => {
-        globalEditor.evaluate()
-        setIsMusicPlaying(true)
-    }
+    //const handlePlay = () => {
+    //    globalEditor.evaluate()
+    //    setIsMusicPlaying(true)
+    //}
 
-    const handleStop = () => {
-        globalEditor.stop();
-        setIsMusicPlaying(false);
-    }
+    //const handleStop = () => {
+    //    globalEditor.stop();
+    //    setIsMusicPlaying(false);
+    //}
 
-    const handleUserInputProcessing = () => {
-        let text_to_process = songText;
-        const terms_to_replace = /<b1_toggle>|<d1_toggle>|<d2_toggle>/gi
-        let processed_text = text_to_process.replaceAll(terms_to_replace, '')
-        setSongText(processed_text);
-    }
+    //const handleUserInputProcessing = () => {
+    //    let text_to_process = songText;
+    //    const terms_to_replace = /<b1_toggle>|<d1_toggle>|<d2_toggle>/gi
+    //    let processed_text = text_to_process.replaceAll(terms_to_replace, '')
+    //    setSongText(processed_text);
+    //}
 
-    const handleInstrumentDetection = () => {
-        let instrumentTerms = /bassline|main_arp|drums|drums2/gi
-    }
+    //const handleInstrumentDetection = () => {
+    //    let instrumentTerms = /bassline|main_arp|drums|drums2/gi
+    //}
 
     const handleBassline = () => {
         if (basslineStatus == true) {
@@ -112,18 +112,6 @@ export default function StrudelDemo() {
         setSongText(processed_text);
     }
 
-    //const handleMain_arpDetection = () => {
-    //    let main_arpTerm = /main_arp/gi
-
-    //}
-
-    //const handledrumsDetection = () => {
-    //    let drumsTerm = /drums/gi
-    //}
-
-    //const handleDrums2Detection = () => {
-    //    let drums2Term = /drums/gi
-    //}
 
     // Modifies the songText to use the user's provided setcps value
     const handleCPS = () => { 
@@ -142,51 +130,18 @@ export default function StrudelDemo() {
         globalEditor.setTheme(themeName)
     }
 
-    //const handleBasslineVolume = () => {
-    //    let basslineRegex = /bassline:.*?\.gain\(.*?\)/gis
-
-    //}
-
-    //const volumeMultiply = (input1, volume) => {
-    //    console.log("input1 " + input1)
-    //    console.log("volume " + volume)
-    //    let sum = input1 * volume;
-    //    console.log("sum " + sum)
-    //    return sum.toString();
-    //}
-
-    //const handleVolume = (newVolume) => {
-    //    let gainRegex = /(?<=\.gain\().*(?=\))/g
-    //    let processed_text = songText.replaceAll(gainRegex, volumeMultiply(Number(gainRegex), Number(newVolume)))
-    //    console.log("processed_text" + processed_text)
-
-    //}
-
-    //const handleVolume = (newVolume) => {
-    //    let gainRegex = /(?<=\.gain\().*(?=\))/g
-    //    let processed_text = songText.replaceAll(gainRegex, (match) => volumeMultiply(Number(match), Number(newVolume)))
-    //    console.log("processed_text" + processed_text)
-    //    setSongText(processed_text);
-
-    //}
-
     const handleVolume = (newVolume) => {
-        console.log("newVolume" + newVolume)
         // Regular expression uses positive lookbehind and positive lookahead to only match the arguments of .gain() i.e. the value within the parenthesis
         let gainRegex = /(?<=.*\.gain\().*(?=\*|\))/g 
         // Volume is calculated by multiplying the existing argument of .gain() with the value returned by the volume slider.
         // However, this requires that the previous multiplier value be removed from the string prior to applying the new value returned by the volume slider.
         let processed_text = songText.replaceAll(gainRegex, (match) => (removeMultiplierFromGain(match) + "*" + newVolume)) 
-        console.log("processed_text" + processed_text)
         setSongText(processed_text);
 
     }
 
-    
     const removeMultiplierFromGain = (oldVolumeValue) => {
-        console.log("oldvolumevalue " + oldVolumeValue);
         let volumeValue = oldVolumeValue.match(/.*(?=\*)/)
-        console.log("volumeValue " + volumeValue);
         if (volumeValue == null) {
             return oldVolumeValue
         } else {
@@ -213,7 +168,7 @@ export default function StrudelDemo() {
 
     const [patternStatus, setPatternStatus] = useState("0");
 
-    const [volumeModifier, setVolumeModifier] = useState();
+    const [volumeModifier, setVolumeModifier] = useState("1");
 
 useEffect(() => {
 
@@ -270,42 +225,53 @@ return (
                     </div>
                     {/*Column 2 containing interface components and textbox*/}
                     <div className="col-5 mx-auto pe-5" >
-                        <div className="p-4 mb-4" style={{ backgroundColor: 'rgba(255,255,255, 0.5)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
+                        <div className="p-4 mb-4" style={{ backgroundColor: 'rgba(255,255,255, 0.4)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                             <div>
                                 {/*<p><b>Interface Controls</b></p>*/}
                             </div>
                             <nav>
                                 {/*<ProcessButtons processingLogic={handleUserInputProcessing} />*/}
-                                <ToggleButton onToggle={handleToggle} musicStatus={isMusicPlaying} /> {/*Whenever the toggle button is clicked, setIsMusicPlaying() sets the value of isMusicPlaying useState variable*/}
-                                <p><b>Setting Controls</b></p>
-                                <div className="row">
+                                <div className="shadow-lg">
+                                    <ToggleButton onToggle={handleToggle} musicStatus={isMusicPlaying} /> {/*Whenever the toggle button is clicked, setIsMusicPlaying() sets the value of isMusicPlaying useState variable*/}
+                                </div>
+                                {/*<div className="text-center col-12 mb-4">*/}
+                                {/*    <b>Setting Controls</b>*/}
+                                {/*</div>*/}
+                                <div className="row mb-2 p-1 pt-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                                     <div className="col-6">
-                                        <PreprocessControls onChange={(i) => setCPSValue(i.target.value)} onClick={(i) => { handleCPS()}} />
-                                        
+                                        <CPSControls onChange={(i) => setCPSValue(i.target.value)} onClick={(i) => { handleCPS()}} />
                                     </div>
                                     <div className="col-6">
-                                        <VolumeControls />
+                                        {/*<VolumeControls />*/}
+                                        <VolumeSlider onChange={(i) => { setVolumeModifier(i.target.value); console.log("volume" + i.target.value); handleVolume(i.target.value) }} />
                                     </div>
                                 </div>
-                                <p><b>Toggle Instrumental Elements</b></p>
-                                <div className="row mb-3">
+                                <div className="row mb-2 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
+                                    <p><b>Toggle Instrumental Elements</b></p>
                                     <BasslineToggle onChange={(i) => { setBasslineStatus(i.target.checked); handleBassline() }} />
                                     <MainArpToggle onChange={(i) => { setMainArpStatus(i.target.checked); handleMainArp() }} />
                                     <DrumsToggle onChange={(i) => { setDrumsStatus(i.target.checked); handleDrums() }} />
                                     <Drums2Toggle onChange={(i) => { setDrums2Status(i.target.checked); handleDrums2() }} />
                                 </div>
-                                <div className="row mb-3">
+                                <div className="row mb-2 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                                     <PatternSetting onChange={(i) => { setPatternStatus(i.target.value); console.log("pattern status should now be " + i.target.value); handlePattern(i.target.value) }} />
                                 </div>
-                                <EffectSelection />
-                                <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> {/*Whenever the text size value is adjusted, setTextSize() sets the value of fontSize useState variable*/}
-                                <SelectTheme onChange={(i) => handleThemeChange(i.target.value)} />
-                                <FileUpload />
+                                {/*<EffectSelection />*/}
+                                <div className="row mb-2 pt-4 pb-3 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
+                                    <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> {/*Whenever the text size value is adjusted, setTextSize() sets the value of fontSize useState variable*/}
+                                </div>
+                                <div className="row mb-2 p-3 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
+                                    <SelectTheme onChange={(i) => handleThemeChange(i.target.value)} />
+                                </div>
+                                <div className="row mb-2 pt-4 pb-3 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
+                                    <p><b>JSON File Upload</b></p>
+                                    <FileUpload />
+                                </div>
                                 <GraphArea />
-                                <VolumeSlider onChange={(i) => { setVolumeModifier(i.target.value); console.log("volume" + i.target.value); handleVolume(i.target.value) }} />
+                                
                             </nav>
                         </div>
-                        <div className="p-4" style={{ backgroundColor: 'rgba(255,255,255, 0.5)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' } }>
+                        <div className="p-4" style={{ backgroundColor: 'rgba(255,255,255, 0.4)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' } }>
                             <PreprocessTextArea defaultValue={songText} onChange={(i) => setSongText(i.target.value)} />
                         </div>
                     </div>

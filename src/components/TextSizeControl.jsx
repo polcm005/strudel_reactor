@@ -3,12 +3,12 @@ function TextSizeControl({ defaultFontSize, onChange }) {
     return (
         <>
         <div className="row">
-                <div className="col-3 mt-4 mb-4"> 
+                <div className="col-3"> 
                     <p className="form-label"><b>Text Size Control</b></p>
                 </div>
 
-            <div className="mt-4 mb-4 col-9">
-                <input type="range" className="form-range" min="9" max="27" step="1" defaultValue={defaultFontSize} onChange={onChange} />
+            <div className="col-9">
+                    <input type="range" className="form-range" min="9" max="27" step="0.1" defaultValue={defaultFontSize} onMouseUp={onChange} />
                 </div>
             </div>
         </>

@@ -67,7 +67,7 @@ stack(
   .postgain(6)
   .pcurve(2)
   .pdec(1)
-  .struct(pick(drum_structure, pattern)),
+  .struct(pick(drum_structure, pattern)).gain(1),
 
   s("sh").struct("[x!3 ~!2 x!10 ~]")
   .postgain(0.5).lpf(7000)
@@ -76,7 +76,7 @@ stack(
 
   s("{~ ~ rim ~ cp ~ rim cp ~!2 rim ~ cp ~ < rim ~ >!2}%8 *2")
   .bank("[KorgDDM110, OberheimDmx]").speed(1.2)
-  .postgain(.25),
+  .postgain(.25).gain(1),
 )
 
 drums2: 

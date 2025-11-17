@@ -2,7 +2,7 @@
 function SelectTheme({onChange}) {
     return (
         <>
-            <select className="form-select mb-3 opacity-75" aria-label="" onChange={onChange}>
+            <select className="form-select opacity-75" aria-label="" onChange={onChange}>
                 <option value="strudelTheme">Select Strudel REPL theme...</option>
                 <option value="algoboy">Algoboy</option>
                 <option value="androidstudio">AndroidStudio</option>

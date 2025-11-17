@@ -2,7 +2,7 @@
 function ToggleButton({ onToggle, musicStatus }) {
     return (
         <>
-            <div className="d-grid mt-2 mb-3 opacity-100">
+            <div className="d-grid mb-3 opacity-100">
                 <button type="button" className={musicStatus ? "btn btn-danger" : "btn btn-primary"} onClick={onToggle}>{musicStatus ? "Stop Music" : "Play Music"}</button>
             </div>
         </>
