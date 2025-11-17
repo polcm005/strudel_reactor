@@ -26,6 +26,7 @@ import DrumsToggle from './components/DrumsToggle'
 import Drums2Toggle from './components/Drums2Toggle'
 import MainArpToggle from './components/MainArpToggle'
 import PatternSetting from './components/PatternSetting'
+import VolumeSlider from './components/VolumeSlider'
 
 let globalEditor = null;
 
@@ -141,6 +142,59 @@ export default function StrudelDemo() {
         globalEditor.setTheme(themeName)
     }
 
+    //const handleBasslineVolume = () => {
+    //    let basslineRegex = /bassline:.*?\.gain\(.*?\)/gis
+
+    //}
+
+    //const volumeMultiply = (input1, volume) => {
+    //    console.log("input1 " + input1)
+    //    console.log("volume " + volume)
+    //    let sum = input1 * volume;
+    //    console.log("sum " + sum)
+    //    return sum.toString();
+    //}
+
+    //const handleVolume = (newVolume) => {
+    //    let gainRegex = /(?<=\.gain\().*(?=\))/g
+    //    let processed_text = songText.replaceAll(gainRegex, volumeMultiply(Number(gainRegex), Number(newVolume)))
+    //    console.log("processed_text" + processed_text)
+
+    //}
+
+    //const handleVolume = (newVolume) => {
+    //    let gainRegex = /(?<=\.gain\().*(?=\))/g
+    //    let processed_text = songText.replaceAll(gainRegex, (match) => volumeMultiply(Number(match), Number(newVolume)))
+    //    console.log("processed_text" + processed_text)
+    //    setSongText(processed_text);
+
+    //}
+
+    const handleVolume = (newVolume) => {
+        console.log("newVolume" + newVolume)
+        // Regular expression uses positive lookbehind and positive lookahead to only match the arguments of .gain() i.e. the value within the parenthesis
+        let gainRegex = /(?<=.*\.gain\().*(?=\*|\))/g 
+        // Volume is calculated by multiplying the existing argument of .gain() with the value returned by the volume slider.
+        // However, this requires that the previous multiplier value be removed from the string prior to applying the new value returned by the volume slider.
+        let processed_text = songText.replaceAll(gainRegex, (match) => (removeMultiplierFromGain(match) + "*" + newVolume)) 
+        console.log("processed_text" + processed_text)
+        setSongText(processed_text);
+
+    }
+
+    
+    const removeMultiplierFromGain = (oldVolumeValue) => {
+        console.log("oldvolumevalue " + oldVolumeValue);
+        let volumeValue = oldVolumeValue.match(/.*(?=\*)/)
+        console.log("volumeValue " + volumeValue);
+        if (volumeValue == null) {
+            return oldVolumeValue
+        } else {
+            return volumeValue;
+        }
+    }
+
+
     const [songText, setSongText] = useState(stranger_tune) // This state variable holds the current user input entered in the PreprocessTextArea component
 
     const [fontSize, setTextSize] = useState(18) // This state variable holds the text size of the Strudel player contents
@@ -158,6 +212,8 @@ export default function StrudelDemo() {
     const [mainArpStatus, setMainArpStatus] = useState(true);
 
     const [patternStatus, setPatternStatus] = useState("0");
+
+    const [volumeModifier, setVolumeModifier] = useState();
 
 useEffect(() => {
 
@@ -203,7 +259,7 @@ useEffect(() => {
 }, [songText, fontSize]); // useEffect runs when the application beins, and whenever songText or fontSize change in value
 return (
     <div>
-        <h1 className="text-center shadow-lg text" style={{opacity:0.75, backgroundColor:'white'} }>Strudel Demo</h1>
+        <h1 className="text-center shadow-lg text" style={{ backgroundColor:'rgba(255,255,255, 0.5)'} }>Strudel Demo</h1>
         <br/>
         <main>
             <div className="container-fluid">
@@ -234,9 +290,9 @@ return (
                                 <p><b>Toggle Instrumental Elements</b></p>
                                 <div className="row mb-3">
                                     <BasslineToggle onChange={(i) => { setBasslineStatus(i.target.checked); handleBassline() }} />
+                                    <MainArpToggle onChange={(i) => { setMainArpStatus(i.target.checked); handleMainArp() }} />
                                     <DrumsToggle onChange={(i) => { setDrumsStatus(i.target.checked); handleDrums() }} />
                                     <Drums2Toggle onChange={(i) => { setDrums2Status(i.target.checked); handleDrums2() }} />
-                                    <MainArpToggle onChange={(i) => { setMainArpStatus(i.target.checked); handleMainArp() }} />
                                 </div>
                                 <div className="row mb-3">
                                     <PatternSetting onChange={(i) => { setPatternStatus(i.target.value); console.log("pattern status should now be " + i.target.value); handlePattern(i.target.value) }} />
@@ -245,7 +301,8 @@ return (
                                 <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> {/*Whenever the text size value is adjusted, setTextSize() sets the value of fontSize useState variable*/}
                                 <SelectTheme onChange={(i) => handleThemeChange(i.target.value)} />
                                 <FileUpload />
-                                <GraphArea/>
+                                <GraphArea />
+                                <VolumeSlider onChange={(i) => { setVolumeModifier(i.target.value); console.log("volume" + i.target.value); handleVolume(i.target.value) }} />
                             </nav>
                         </div>
                         <div className="p-4" style={{ backgroundColor: 'rgba(255,255,255, 0.5)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' } }>
