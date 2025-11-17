@@ -124,7 +124,8 @@ export default function StrudelDemo() {
     //    let drums2Term = /drums/gi
     //}
 
-    const handleCPS = () => {
+    // Modifies the songText to use the user's provided setcps value
+    const handleCPS = () => { 
         
         /*console.log("handleCPS" + cpsValue)*/
         let cpsRegex = /setcps\(.*\)/gi
@@ -132,9 +133,9 @@ export default function StrudelDemo() {
         setSongText(processed_text)
         //console.log("pre-restart" + processed_text)
         //console.log("pre-restart" + songText)
-
     }
 
+    // Modifies the Strudel repl theme per user selection
     const handleThemeChange = (themeName) => {
         /*console.log("received theme" + themeName);*/
         globalEditor.setTheme(themeName)
@@ -208,19 +209,19 @@ return (
             <div className="container-fluid">
                 <div className="row">
                     {/*Column 1 containing Strudel Player*/}
-                    <div className="col-6 p-1 mx-auto shadow-lg " style={{ maxHeight: '91vh', overflowY: 'auto', backgroundColor: '#222222', borderStyle: 'solid', borderRadius: '15px', borderColor: '#fffb96', borderWidth: '3px' }}>
+                    <div className="col-6 p-1 mx-auto shadow-lg " style={{ maxHeight: '91vh', overflow: 'scroll', backgroundColor: '#222222', borderStyle: 'solid', borderRadius: '15px', borderColor: '#fffb96', borderWidth: '3px' }}>
                         <div id="editor" />
                     </div>
                     {/*Column 2 containing interface components and textbox*/}
                     <div className="col-5 mx-auto pe-5" >
-                        <div className="p-4 mb-4" style={{ backgroundColor: 'white', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' }}>
+                        <div className="p-4 mb-4" style={{ backgroundColor: 'rgba(255,255,255, 0.5)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                             <div>
-                                <p><b>Interface Controls</b></p>
+                                {/*<p><b>Interface Controls</b></p>*/}
                             </div>
                             <nav>
                                 {/*<ProcessButtons processingLogic={handleUserInputProcessing} />*/}
                                 <ToggleButton onToggle={handleToggle} musicStatus={isMusicPlaying} /> {/*Whenever the toggle button is clicked, setIsMusicPlaying() sets the value of isMusicPlaying useState variable*/}
-                                <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> {/*Whenever the text size value is adjusted, setTextSize() sets the value of fontSize useState variable*/}
+                                <p><b>Setting Controls</b></p>
                                 <div className="row">
                                     <div className="col-6">
                                         <PreprocessControls onChange={(i) => setCPSValue(i.target.value)} onClick={(i) => { handleCPS()}} />
@@ -241,12 +242,13 @@ return (
                                     <PatternSetting onChange={(i) => { setPatternStatus(i.target.value); console.log("pattern status should now be " + i.target.value); handlePattern(i.target.value) }} />
                                 </div>
                                 <EffectSelection />
-                                <FileUpload />
+                                <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> {/*Whenever the text size value is adjusted, setTextSize() sets the value of fontSize useState variable*/}
                                 <SelectTheme onChange={(i) => handleThemeChange(i.target.value)} />
+                                <FileUpload />
                                 <GraphArea/>
                             </nav>
                         </div>
-                        <div className="p-4" style={{ backgroundColor: 'white', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' } }>
+                        <div className="p-4" style={{ backgroundColor: 'rgba(255,255,255, 0.5)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' } }>
                             <PreprocessTextArea defaultValue={songText} onChange={(i) => setSongText(i.target.value)} />
                         </div>
                     </div>

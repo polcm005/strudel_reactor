@@ -2,7 +2,7 @@
 function FileUpload() {
     return (
         <>
-        <div className="mb-2 pb-2">
+        <div className="mb-2 pb-2 opacity-75">
         <p><b>JSON File Upload</b></p>
             <div className="input-group">
                 <input type="file" className="form-control" id="inputGroupFile010"/>
