@@ -1,4 +1,4 @@
-
+// This component holds the volume slider
 function VolumeSlider({ onChange }) {
     return (
         <>

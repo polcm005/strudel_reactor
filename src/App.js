@@ -41,7 +41,6 @@ export default function StrudelDemo() {
     const hasRun = useRef(false);
     
     const handleToggle = () => {
-        
         globalEditor.toggle() // When called, this method either stops or starts the music, depending on whether it is currently playing
         if (isMusicPlaying == false) { setIsMusicPlaying(true) }; // if the music was not playing prior (i.e. false), change the isMusicPlaying state variable to true
         if (isMusicPlaying == true) { setIsMusicPlaying(false) }; // if the music was playing prior (i.e. true), change the isMusicPlaying state variable to false
@@ -98,7 +97,6 @@ export default function StrudelDemo() {
         setSongText(processed_text);
     }
 
-
     // Modifies the songText to use the user's provided setcps value
     const handleCPS = () => {
         let cpsRegex = /setcps\(.*\)/gi
@@ -111,6 +109,7 @@ export default function StrudelDemo() {
         globalEditor.setTheme(themeName)
     }
 
+    // This function is used to modify the music volume
     const handleVolume = (newVolume) => {
         // Regular expression uses positive lookbehind and positive lookahead to only match the arguments of .gain() i.e. the value within the parenthesis
         let gainRegex = /(?<=.*\.gain\().*(?=\*|\))/g 
@@ -121,7 +120,7 @@ export default function StrudelDemo() {
 
     }
 
-    // This function returns a string that only contains the characters appearing prior to multiplication symbol * 
+    // This function is used in the process of changing music volume, it returns a string that only contains the characters appearing prior to multiplication symbol * 
     const removeMultiplierFromGain = (oldVolumeValue) => {
         let volumeValue = oldVolumeValue.match(/.*(?=\*)/)  
         if (volumeValue == null) {
@@ -203,27 +202,27 @@ export default function StrudelDemo() {
         else {alert("No settings are currently saved") }
     }
 
-    const [songText, setSongText] = useState(stranger_tune) // This state variable holds the current user input entered in the PreprocessTextArea component
+    const [songText, setSongText] = useState(stranger_tune) // Holds the current user input entered in the PreprocessTextArea component
 
-    const [fontSize, setTextSize] = useState(18) // This state variable holds the text size of the Strudel player contents
+    const [fontSize, setTextSize] = useState(18) // Holds the text size of the Strudel player contents
 
-    const [isMusicPlaying, setIsMusicPlaying] = useState(false); // This state variable indicates whether the music is currently playing or stopped
+    const [isMusicPlaying, setIsMusicPlaying] = useState(false); // Indicates whether the music is currently playing or stopped
 
-    const [cpsValue, setCPSValue] = useState("140/60/4");
+    const [cpsValue, setCPSValue] = useState("140/60/4"); // Holds the value of the setcps() argument
 
-    const [basslineStatus, setBasslineStatus] = useState(true);
+    const [basslineStatus, setBasslineStatus] = useState(true); // Indicates whether the bassline instrument is checked (true) or unchecked (false)
 
-    const [drumsStatus, setDrumsStatus] = useState(true);
+    const [drumsStatus, setDrumsStatus] = useState(true); // Indicates whether the drums instrument is checked (true) or unchecked (false)
 
-    const [drums2Status, setDrums2Status] = useState(true);
+    const [drums2Status, setDrums2Status] = useState(true); // Indicates whether the drums2 instrument is checked (true) or unchecked (false)
 
-    const [mainArpStatus, setMainArpStatus] = useState(true);
+    const [mainArpStatus, setMainArpStatus] = useState(true); // Indicates whether the main_arp instrument is checked (true) or unchecked (false)
 
-    const [patternStatus, setPatternStatus] = useState("0");
+    const [patternStatus, setPatternStatus] = useState("0"); // Holds the value of the pattern variable
 
-    const [volumeModifier, setVolumeModifier] = useState("1");
+    const [volumeModifier, setVolumeModifier] = useState("1"); // Holds the value of the volume variable
 
-    const [jsonSettings, setJSONSettings] = useState();
+    const [jsonSettings, setJSONSettings] = useState(); // Holds the JSON object settings
 
 useEffect(() => {
 
@@ -266,7 +265,8 @@ useEffect(() => {
         globalEditor.evaluate();
     }
 
-}, [songText, fontSize, jsonSettings]); // useEffect runs when the application beins, and whenever songText or fontSize change in value
+}, [songText, fontSize, jsonSettings]); // useEffect runs when the application beins, and whenever songText, fontSize or jsonSettings change in value
+
 return (
     <div>
         <h1 className="text-center shadow-lg text" style={{ backgroundColor:'rgba(255,255,255, 0.5)'} }>Strudel Demo</h1>
@@ -306,7 +306,7 @@ return (
                                     <PatternSetting checkedValue={patternStatus} onChange={(i) => { setPatternStatus(i.target.value); handlePattern(i.target.value) }} />
                                 </div>
                                 <div className="row mb-2 pt-4 pb-3 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
-                                    <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> {/*Whenever the text size value is adjusted, setTextSize() sets the value of fontSize useState variable*/}
+                                    <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> 
                                 </div>
                                 <div className="row mb-2 p-3 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                                     <SelectTheme onChange={(i) => handleThemeChange(i.target.value)} />
@@ -319,9 +319,6 @@ return (
                                             <LoadSettings onClick={(i) => { handleJSONLoad() }} />
                                         </div>
                                     </div>
-                                {/*<div>*/}
-                                {/*    <GraphArea />*/}
-                                {/*</div>*/}
                             </nav>
                         </div>
                         <div className="p-4" style={{ backgroundColor: 'rgba(255,255,255, 0.4)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' } }>

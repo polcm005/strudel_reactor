@@ -1,3 +1,4 @@
+// This component is not used in the application
 function PlayButtons({ onPlay, onStop, onToggle, isMusicPlaying }) {
   return (
       <>

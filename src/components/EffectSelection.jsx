@@ -1,4 +1,4 @@
-// This component allows users to enable and disable different music effects
+// This component has not been used in the application
 function EffectSelection() {
     return (
         <>

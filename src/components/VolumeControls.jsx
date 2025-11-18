@@ -1,3 +1,4 @@
+// This component has not been used in the application
 function VolumeControls() {
     return (
         <>

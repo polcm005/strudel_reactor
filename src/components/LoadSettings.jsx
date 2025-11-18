@@ -1,3 +1,4 @@
+// This component provides the button to load saved settings
 function LoadSettings({ onClick }) {
     return (
         <>

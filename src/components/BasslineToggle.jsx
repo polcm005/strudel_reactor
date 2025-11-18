@@ -1,4 +1,4 @@
-// This component allows users to select which instrumentals they wish to enable or disable
+// This component provides the checkbox to check or uncheck the bassline instrument
 function BasslineToggle({onChange, checkedValue}) {
     return (
         <>

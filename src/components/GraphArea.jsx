@@ -1,4 +1,4 @@
-// This component holds the d3 graphing area
+// This component has not been used in the application
 function GraphArea() {
     return (
         <>

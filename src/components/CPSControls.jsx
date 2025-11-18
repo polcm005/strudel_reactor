@@ -1,4 +1,4 @@
-// This component to set the cycles per second
+// This component provides the input field and submit button to set the cycles per second
 function CPSControls({ onChange, onClick, cpsInput }) {
     return (
         <>

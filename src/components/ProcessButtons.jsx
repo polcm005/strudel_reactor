@@ -1,4 +1,4 @@
-// This component holds buttons which applies processing on songs
+// This component has not been used in the application
 function ProcessButtons({processingLogic}) {
   return (
       <>

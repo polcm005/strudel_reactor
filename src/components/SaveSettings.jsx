@@ -1,3 +1,4 @@
+// This component provides the button to save the current settings
 function SaveSettings({ onClick }) {
     return (
         <>

@@ -1,4 +1,4 @@
-// This component allows users to upload a JSON file to be read by the application
+// This component has not been used in the application
 function FileUpload() {
     return (
         <>

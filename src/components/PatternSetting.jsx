@@ -1,3 +1,4 @@
+// This component provides the radio elements to set the song's pattern variable
 function PatternSetting({ onChange, checkedValue }) {
     return (
         <>
