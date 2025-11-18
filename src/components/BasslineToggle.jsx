@@ -2,33 +2,9 @@
 function BasslineToggle({onChange}) {
     return (
         <>
-            {/*<div className="col-2">*/}
-            {/*    <div className="form-check">*/}
-            {/*        <input className="form-check-input" type="checkbox" value="" id="d1"/>*/}
-            {/*        <label className="form-check-label" htmlFor="d1">*/}
-            {/*            Drums 1*/}
-            {/*        </label>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/*<div className="col-2">*/}
-            {/*    <div className="form-check">*/}
-            {/*        <input className="form-check-input" type="checkbox" value="" id="d2" />*/}
-            {/*        <label className="form-check-label" htmlFor="b1">*/}
-            {/*            Drums 2*/}
-            {/*        </label>*/}
-            {/*    </div>*/}
-            {/*    </div>*/}
-            {/*<div className="col-2">*/}
-            {/*    <div className="form-check">*/}
-            {/*            <input className="form-check-input" type="checkbox" value="" id="b1"/>*/}
-            {/*        <label className="form-check-label" htmlFor="b1">*/}
-            {/*            Bassline 1*/}
-            {/*        </label>*/}
-            {/*    </div>*/}
-            {/* </div>*/}
             <div className="col-2">
                 <div className="form-check">
-                        <input className="form-check-input" type="checkbox" value="" id="b" onChange={onChange} defaultChecked/>
+                    <input className="form-check-input" type="checkbox" value="" id="b" onChange={onChange} defaultChecked/>
                     <label className="form-check-label">
                         Bassline
                     </label>

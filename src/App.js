@@ -27,6 +27,8 @@ import Drums2Toggle from './components/Drums2Toggle'
 import MainArpToggle from './components/MainArpToggle'
 import PatternSetting from './components/PatternSetting'
 import VolumeSlider from './components/VolumeSlider'
+import SaveSettings from './components/SaveSettings'
+import LoadSettings from './components/LoadSettings'
 
 let globalEditor = null;
 
@@ -141,7 +143,7 @@ export default function StrudelDemo() {
     }
 
     const removeMultiplierFromGain = (oldVolumeValue) => {
-        let volumeValue = oldVolumeValue.match(/.*(?=\*)/)
+        let volumeValue = oldVolumeValue.match(/.*(?=\*)/) // Matches characters that appear prior to multiplication symbol * 
         if (volumeValue == null) {
             return oldVolumeValue
         } else {
@@ -149,6 +151,58 @@ export default function StrudelDemo() {
         }
     }
 
+    const handleJSONSave = () => {
+        let settingDictionary = {
+            "CPSValue": cpsValue,
+            "basslineStatus": basslineStatus,
+            "drumsStatus": drumsStatus,
+            "drums2Status": drums2Status,
+            "mainArpStatus": mainArpStatus,
+            "patternStatus": patternStatus,
+        }
+
+        let jsonSettingString = JSON.stringify(settingDictionary);
+
+        setJSONSettings(jsonSettingString);
+        console.log("json setting string" + jsonSettingString);
+        console.log("json settings immediately after being set" + jsonSettings);
+
+    }
+
+    const handleJSONLoad = () => {
+
+        if (jsonSettings != null) {
+
+            let parsedJSON = JSON.parse(jsonSettings);
+            console.log(parsedJSON)
+
+            setCPSValue(parsedJSON.CPSValue)
+            let cpsRegex = /setcps\(.*\)/gi
+            let processed_text = songText.replaceAll(cpsRegex, "setcps(" + parsedJSON.CPSValue + ")");
+            setSongText(processed_text);
+
+            setBasslineStatus(parsedJSON.basslineStatus)
+            setDrumsStatus(parsedJSON.drumsStatus)
+            setDrums2Status(parsedJSON.drums2Status)
+            setMainArpStatus(parsedJSON.mainArpStatus)
+            setPatternStatus(parsedJSON.patternStatus)
+
+            //let cpsRegex = /setcps\(.*\)/gi
+            //let processed_text = songText.replaceAll(cpsRegex, "setcps(" + parsedJSON.CPSValue + ")")
+            //setCPSValue(parsedJSON.CPSValue)
+
+
+            //if (parsedJSON.basslineStatus == true) {
+            //    let processed_text = songText.replaceAll('_bassline:', 'bassline:');
+            //    setSongText(processed_text);
+            //} else {
+            //    let processed_text = songText.replaceAll('bassline:', '_bassline:');
+            //    setSongText(processed_text);
+            //}
+
+        }
+        else {alert("No settings are currently saved") }
+    }
 
     const [songText, setSongText] = useState(stranger_tune) // This state variable holds the current user input entered in the PreprocessTextArea component
 
@@ -156,7 +210,7 @@ export default function StrudelDemo() {
 
     const [isMusicPlaying, setIsMusicPlaying] = useState(false); // This state variable indicates whether the music is currently playing or stopped
 
-    const [cpsValue, setCPSValue] = useState();
+    const [cpsValue, setCPSValue] = useState("140/60/4");
 
     const [basslineStatus, setBasslineStatus] = useState(true);
 
@@ -169,6 +223,8 @@ export default function StrudelDemo() {
     const [patternStatus, setPatternStatus] = useState("0");
 
     const [volumeModifier, setVolumeModifier] = useState("1");
+
+    const [jsonSettings, setJSONSettings] = useState();
 
 useEffect(() => {
 
@@ -203,6 +259,7 @@ useEffect(() => {
                 },
             });
     }
+    console.log("json settings after render" + jsonSettings);
 
     globalEditor.setCode(songText); 
     globalEditor.setFontSize(fontSize);
@@ -211,7 +268,7 @@ useEffect(() => {
         globalEditor.evaluate();
     }
 
-}, [songText, fontSize]); // useEffect runs when the application beins, and whenever songText or fontSize change in value
+}, [songText, fontSize, jsonSettings]); // useEffect runs when the application beins, and whenever songText or fontSize change in value
 return (
     <div>
         <h1 className="text-center shadow-lg text" style={{ backgroundColor:'rgba(255,255,255, 0.5)'} }>Strudel Demo</h1>
@@ -227,22 +284,16 @@ return (
                     <div className="col-5 mx-auto pe-5" >
                         <div className="p-4 mb-4" style={{ backgroundColor: 'rgba(255,255,255, 0.4)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                             <div>
-                                {/*<p><b>Interface Controls</b></p>*/}
-                            </div>
+                        </div>
                             <nav>
-                                {/*<ProcessButtons processingLogic={handleUserInputProcessing} />*/}
                                 <div className="shadow-lg">
                                     <ToggleButton onToggle={handleToggle} musicStatus={isMusicPlaying} /> {/*Whenever the toggle button is clicked, setIsMusicPlaying() sets the value of isMusicPlaying useState variable*/}
                                 </div>
-                                {/*<div className="text-center col-12 mb-4">*/}
-                                {/*    <b>Setting Controls</b>*/}
-                                {/*</div>*/}
                                 <div className="row mb-2 p-1 pt-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                                     <div className="col-6">
-                                        <CPSControls onChange={(i) => setCPSValue(i.target.value)} onClick={(i) => { handleCPS()}} />
+                                        <CPSControls value={cpsValue} onChange={(i) => setCPSValue(i.target.value)} onClick={(i) => { handleCPS()}} />
                                     </div>
                                     <div className="col-6">
-                                        {/*<VolumeControls />*/}
                                         <VolumeSlider onChange={(i) => { setVolumeModifier(i.target.value); console.log("volume" + i.target.value); handleVolume(i.target.value) }} />
                                     </div>
                                 </div>
@@ -256,19 +307,29 @@ return (
                                 <div className="row mb-2 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                                     <PatternSetting onChange={(i) => { setPatternStatus(i.target.value); console.log("pattern status should now be " + i.target.value); handlePattern(i.target.value) }} />
                                 </div>
-                                {/*<EffectSelection />*/}
                                 <div className="row mb-2 pt-4 pb-3 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                                     <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> {/*Whenever the text size value is adjusted, setTextSize() sets the value of fontSize useState variable*/}
                                 </div>
                                 <div className="row mb-2 p-3 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                                     <SelectTheme onChange={(i) => handleThemeChange(i.target.value)} />
                                 </div>
-                                <div className="row mb-2 pt-4 pb-3 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
-                                    <p><b>JSON File Upload</b></p>
-                                    <FileUpload />
+                                {/*<div className="row mb-2 pt-4 pb-3 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>*/}
+                                {/*    <p><b>JSON File Upload</b></p>*/}
+                                {/*    <FileUpload />*/}
+                                {/*</div>*/}
+
+                                    <div className="row mb-2 pt-3 pb-3 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
+                                        <div className="col-6">
+                                                <SaveSettings onClick={(i) => { handleJSONSave() }} />
+                                        </div>
+                                        <div className="col-6">
+                                            <LoadSettings onClick={(i) => { handleJSONLoad() }} />
+                                        </div>
+                                    </div>
+
+                                <div>
+                                    <GraphArea />
                                 </div>
-                                <GraphArea />
-                                
                             </nav>
                         </div>
                         <div className="p-4" style={{ backgroundColor: 'rgba(255,255,255, 0.4)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' } }>
