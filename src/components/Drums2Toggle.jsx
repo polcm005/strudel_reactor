@@ -1,10 +1,10 @@
 // This component allows users to toggle the drums2 instrumentals
-function Drums2Toggle({ onChange }) {
+function Drums2Toggle({ onChange, checkedValue }) {
     return (
         <>
             <div className="col-2">
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="d2" onChange={onChange} defaultChecked />
+                    <input className="form-check-input" type="checkbox" value="" id="d2" onChange={onChange} checked={checkedValue} />
                     <label className="form-check-label">
                         Drums2
                     </label>

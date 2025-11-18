@@ -3,7 +3,7 @@ function PreprocessTextArea({ defaultValue, onChange }) {
   return (
       <>
           <label htmlFor="exampleFormControlTextarea1" className="form-label"><b>Text to preprocess:</b></label>
-          <textarea className="form-control shadow-lg border rounded-4" rows="16" id="proc" defaultValue={defaultValue} onChange={onChange}></textarea>
+          <textarea className="form-control shadow-lg border rounded-4" rows="19" id="proc" defaultValue={defaultValue} onChange={onChange}></textarea>
       </>
   );
 }

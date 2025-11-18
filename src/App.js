@@ -41,63 +41,24 @@ export default function StrudelDemo() {
     const hasRun = useRef(false);
     
     const handleToggle = () => {
+        
         globalEditor.toggle() // When called, this method either stops or starts the music, depending on whether it is currently playing
         if (isMusicPlaying == false) { setIsMusicPlaying(true) }; // if the music was not playing prior (i.e. false), change the isMusicPlaying state variable to true
         if (isMusicPlaying == true) { setIsMusicPlaying(false) }; // if the music was playing prior (i.e. true), change the isMusicPlaying state variable to false
-        /*console.log(globalEditor);*/
-        //console.log("cpsvalue " + cpsValue);
     }
 
-    //const handlePlay = () => {
-    //    globalEditor.evaluate()
-    //    setIsMusicPlaying(true)
-    //}
-
-    //const handleStop = () => {
-    //    globalEditor.stop();
-    //    setIsMusicPlaying(false);
-    //}
-
-    //const handleUserInputProcessing = () => {
-    //    let text_to_process = songText;
-    //    const terms_to_replace = /<b1_toggle>|<d1_toggle>|<d2_toggle>/gi
-    //    let processed_text = text_to_process.replaceAll(terms_to_replace, '')
-    //    setSongText(processed_text);
-    //}
-
-    //const handleInstrumentDetection = () => {
-    //    let instrumentTerms = /bassline|main_arp|drums|drums2/gi
-    //}
-
+    // Responsible for changing the bassline instrument status
     const handleBassline = () => {
         if (basslineStatus == true) {
             let processed_text = songText.replaceAll('bassline:', '_bassline:');
             setSongText(processed_text);
-        } else { let processed_text = songText.replaceAll('_bassline:', 'bassline:');
-            setSongText(processed_text);
-        }
-    }
-
-    const handleDrums = () => {
-        if (drumsStatus == true) {
-            let processed_text = songText.replaceAll('drums:', '_drums:');
-            setSongText(processed_text);
         } else {
-            let processed_text = songText.replaceAll('_drums:', 'drums:');
+            let processed_text = songText.replaceAll('_bassline:', 'bassline:');
             setSongText(processed_text);
         }
     }
 
-    const handleDrums2 = () => {
-        if (drums2Status == true) {
-            let processed_text = songText.replaceAll('drums2:', '_drums2:');
-            setSongText(processed_text);
-        } else {
-            let processed_text = songText.replaceAll('_drums2:', 'drums2:');
-            setSongText(processed_text);
-        }
-    }
-
+    // Responsible for changing the main_arp instrument status
     const handleMainArp = () => {
         if (mainArpStatus == true) {
             let processed_text = songText.replaceAll('main_arp:', '_main_arp:');
@@ -108,6 +69,29 @@ export default function StrudelDemo() {
         }
     }
 
+    // Responsible for changing the drums instrument status
+    const handleDrums = () => {
+        if (drumsStatus == true) {
+            let processed_text = songText.replaceAll('drums:', '_drums:');
+            setSongText(processed_text);
+        } else {
+            let processed_text = songText.replaceAll('_drums:', 'drums:');
+            setSongText(processed_text);
+        }
+    }
+
+    // Responsible for changing the drums2 instrument status
+    const handleDrums2 = () => {
+        if (drums2Status == true) {
+            let processed_text = songText.replaceAll('drums2:', '_drums2:');
+            setSongText(processed_text);
+        } else {
+            let processed_text = songText.replaceAll('_drums2:', 'drums2:');
+            setSongText(processed_text);
+        }
+    }
+
+    // Responsible for changing the value of the 'pattern' setting in the song
     const handlePattern = (newValue) => {
         let patternRegex = /const pattern = .*/gi
         let processed_text = songText.replaceAll(patternRegex, 'const pattern = ' + newValue);
@@ -116,19 +100,14 @@ export default function StrudelDemo() {
 
 
     // Modifies the songText to use the user's provided setcps value
-    const handleCPS = () => { 
-        
-        /*console.log("handleCPS" + cpsValue)*/
+    const handleCPS = () => {
         let cpsRegex = /setcps\(.*\)/gi
         let processed_text = songText.replaceAll(cpsRegex, "setcps(" + cpsValue + ")")
         setSongText(processed_text)
-        //console.log("pre-restart" + processed_text)
-        //console.log("pre-restart" + songText)
     }
 
     // Modifies the Strudel repl theme per user selection
     const handleThemeChange = (themeName) => {
-        /*console.log("received theme" + themeName);*/
         globalEditor.setTheme(themeName)
     }
 
@@ -142,8 +121,9 @@ export default function StrudelDemo() {
 
     }
 
+    // This function returns a string that only contains the characters appearing prior to multiplication symbol * 
     const removeMultiplierFromGain = (oldVolumeValue) => {
-        let volumeValue = oldVolumeValue.match(/.*(?=\*)/) // Matches characters that appear prior to multiplication symbol * 
+        let volumeValue = oldVolumeValue.match(/.*(?=\*)/)  
         if (volumeValue == null) {
             return oldVolumeValue
         } else {
@@ -151,6 +131,7 @@ export default function StrudelDemo() {
         }
     }
 
+    // This function is responsible for saving the current song settings as as JSON object state variable
     const handleJSONSave = () => {
         let settingDictionary = {
             "CPSValue": cpsValue,
@@ -160,45 +141,63 @@ export default function StrudelDemo() {
             "mainArpStatus": mainArpStatus,
             "patternStatus": patternStatus,
         }
-
         let jsonSettingString = JSON.stringify(settingDictionary);
-
         setJSONSettings(jsonSettingString);
-        console.log("json setting string" + jsonSettingString);
-        console.log("json settings immediately after being set" + jsonSettings);
-
     }
 
-    const handleJSONLoad = () => {
+    // This function sets the state variables for various song settings and modifies songText according 
+    // to the settings values specified in the jsonSettings state variable
+    const handleJSONLoad = () => { 
 
-        if (jsonSettings != null) {
+        if (jsonSettings != null) { // i.e. There exists a saved setting
 
             let parsedJSON = JSON.parse(jsonSettings);
-            console.log(parsedJSON)
-
-            setCPSValue(parsedJSON.CPSValue)
+            
             let cpsRegex = /setcps\(.*\)/gi
             let processed_text = songText.replaceAll(cpsRegex, "setcps(" + parsedJSON.CPSValue + ")");
-            setSongText(processed_text);
 
+            if (parsedJSON.basslineStatus == true) {
+                // true corresponds to the checkbox being ticked (i.e. instrument is playing), so the instrument is unmuted by removing the underscore
+                processed_text = processed_text.replaceAll('_bassline:', 'bassline:'); 
+            } else {
+                // false corresponds to the checkbox being unticked (i.e instrument not playing), so the instrument is muted by prepending with an underscore. 
+                // The following processing logic accounts for if the instrument is already muted, so additional underscores are not prepended
+                processed_text = processed_text.replaceAll('_bassline:', 'bassline:');
+                processed_text = processed_text.replaceAll('bassline:', '_bassline:');
+            }
+
+            if (parsedJSON.mainArpStatus == true) {
+                processed_text = processed_text.replaceAll('_main_arp:', 'main_arp:');
+            } else {
+                processed_text = processed_text.replaceAll('_main_arp:', 'main_arp:');
+                processed_text = processed_text.replaceAll('main_arp:', '_main_arp:');
+            }
+
+            if (parsedJSON.drumsStatus == true) {
+                processed_text = processed_text.replaceAll('_drums:', 'drums:');
+            } else {
+                processed_text = processed_text.replaceAll('_drums:', 'drums:');
+                processed_text = processed_text.replaceAll('drums:', '_drums:');
+            }
+
+            if (parsedJSON.drums2Status == true) {
+                processed_text = processed_text.replaceAll('_drums2:', 'drums2:');
+            } else {
+                processed_text = processed_text.replaceAll('_drums2:', 'drums2:');
+                processed_text = processed_text.replaceAll('drums2:', '_drums2:');
+            }
+
+            let patternRegex = /const pattern = .*/gi
+            processed_text = processed_text.replaceAll(patternRegex, 'const pattern = ' + parsedJSON.patternStatus);
+
+            setCPSValue(parsedJSON.CPSValue)
             setBasslineStatus(parsedJSON.basslineStatus)
+            setMainArpStatus(parsedJSON.mainArpStatus)
             setDrumsStatus(parsedJSON.drumsStatus)
             setDrums2Status(parsedJSON.drums2Status)
-            setMainArpStatus(parsedJSON.mainArpStatus)
             setPatternStatus(parsedJSON.patternStatus)
-
-            //let cpsRegex = /setcps\(.*\)/gi
-            //let processed_text = songText.replaceAll(cpsRegex, "setcps(" + parsedJSON.CPSValue + ")")
-            //setCPSValue(parsedJSON.CPSValue)
-
-
-            //if (parsedJSON.basslineStatus == true) {
-            //    let processed_text = songText.replaceAll('_bassline:', 'bassline:');
-            //    setSongText(processed_text);
-            //} else {
-            //    let processed_text = songText.replaceAll('bassline:', '_bassline:');
-            //    setSongText(processed_text);
-            //}
+            console.log(processed_text)
+            setSongText(processed_text);
 
         }
         else {alert("No settings are currently saved") }
@@ -259,8 +258,7 @@ useEffect(() => {
                 },
             });
     }
-    console.log("json settings after render" + jsonSettings);
-
+    
     globalEditor.setCode(songText); 
     globalEditor.setFontSize(fontSize);
 
@@ -282,7 +280,7 @@ return (
                     </div>
                     {/*Column 2 containing interface components and textbox*/}
                     <div className="col-5 mx-auto pe-5" >
-                        <div className="p-4 mb-4" style={{ backgroundColor: 'rgba(255,255,255, 0.4)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
+                        <div className="p-4 pb-2 mb-3" style={{ backgroundColor: 'rgba(255,255,255, 0.4)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                             <div>
                         </div>
                             <nav>
@@ -294,18 +292,18 @@ return (
                                         <CPSControls value={cpsValue} onChange={(i) => setCPSValue(i.target.value)} onClick={(i) => { handleCPS()}} />
                                     </div>
                                     <div className="col-6">
-                                        <VolumeSlider onChange={(i) => { setVolumeModifier(i.target.value); console.log("volume" + i.target.value); handleVolume(i.target.value) }} />
+                                        <VolumeSlider onChange={(i) => { setVolumeModifier(i.target.value); handleVolume(i.target.value) }} />
                                     </div>
                                 </div>
                                 <div className="row mb-2 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                                     <p><b>Toggle Instrumental Elements</b></p>
-                                    <BasslineToggle onChange={(i) => { setBasslineStatus(i.target.checked); handleBassline() }} />
-                                    <MainArpToggle onChange={(i) => { setMainArpStatus(i.target.checked); handleMainArp() }} />
-                                    <DrumsToggle onChange={(i) => { setDrumsStatus(i.target.checked); handleDrums() }} />
-                                    <Drums2Toggle onChange={(i) => { setDrums2Status(i.target.checked); handleDrums2() }} />
+                                    <BasslineToggle checkedValue={basslineStatus} onChange={(i) => { setBasslineStatus(i.target.checked); handleBassline() }} />
+                                    <MainArpToggle checkedValue={mainArpStatus} onChange={(i) => { setMainArpStatus(i.target.checked); handleMainArp() }} />
+                                    <DrumsToggle checkedValue={drumsStatus} onChange={(i) => { setDrumsStatus(i.target.checked); handleDrums() }} />
+                                    <Drums2Toggle checkedValue={drums2Status} onChange={(i) => { setDrums2Status(i.target.checked); handleDrums2() }} />
                                 </div>
                                 <div className="row mb-2 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
-                                    <PatternSetting onChange={(i) => { setPatternStatus(i.target.value); console.log("pattern status should now be " + i.target.value); handlePattern(i.target.value) }} />
+                                    <PatternSetting checkedValue={patternStatus} onChange={(i) => { setPatternStatus(i.target.value); handlePattern(i.target.value) }} />
                                 </div>
                                 <div className="row mb-2 pt-4 pb-3 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                                     <TextSizeControl defaultValue={fontSize} onChange={(i) => setTextSize(i.target.value)} /> {/*Whenever the text size value is adjusted, setTextSize() sets the value of fontSize useState variable*/}
@@ -313,11 +311,6 @@ return (
                                 <div className="row mb-2 p-3 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                                     <SelectTheme onChange={(i) => handleThemeChange(i.target.value)} />
                                 </div>
-                                {/*<div className="row mb-2 pt-4 pb-3 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>*/}
-                                {/*    <p><b>JSON File Upload</b></p>*/}
-                                {/*    <FileUpload />*/}
-                                {/*</div>*/}
-
                                     <div className="row mb-2 pt-3 pb-3 p-2 shadow-sm" style={{ backgroundColor: 'rgba(255,255,255, 0.2)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px', opacity: "100%" }}>
                                         <div className="col-6">
                                                 <SaveSettings onClick={(i) => { handleJSONSave() }} />
@@ -326,10 +319,9 @@ return (
                                             <LoadSettings onClick={(i) => { handleJSONLoad() }} />
                                         </div>
                                     </div>
-
-                                <div>
-                                    <GraphArea />
-                                </div>
+                                {/*<div>*/}
+                                {/*    <GraphArea />*/}
+                                {/*</div>*/}
                             </nav>
                         </div>
                         <div className="p-4" style={{ backgroundColor: 'rgba(255,255,255, 0.4)', borderRadius: '15px', borderStyle: 'solid', borderColor: '#fffb96', borderWidth: '0px' } }>
